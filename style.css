@@ -1,78 +1,78 @@
 body {
-  width: 400px;
-  overflow-x:hidden;
-  font-family: sans-serif;
-  margin-top: 50px;
+	width: 400px;
+	overflow-x:hidden;
+	font-family: sans-serif;
+	margin-top: 50px;
 }
 
 input {
-  width: 400px;
-  box-sizing: border-box;
-  font-size: 18px;
-  padding: 4px 6px;
-  position: fixed;
-  top: 5px;
+	width: 400px;
+	box-sizing: border-box;
+	font-size: 18px;
+	padding: 4px 6px;
+	position: fixed;
+	top: 5px;
 }
 
 #tabs {
-  max-height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
+	max-height: 500px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .tab {
-  display: block;
-  max-width: 370px;
-  position: relative;
+	display: block;
+	max-width: 370px;
+	position: relative;
 
-  color: #333;
-  padding: 5px;
-  font-size: 14px;
-  line-height: 18px;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid whitesmoke;
+	color: #333;
+	padding: 5px;
+	font-size: 14px;
+	line-height: 18px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid whitesmoke;
 }
 .tab:last-child {
-  border-bottom: 1px solid gray;
+	border-bottom: 1px solid gray;
 }
 /* highlight hovered tab and first tab ([enter] to select first tab) */
 .tab:hover, .tab:first-child {
-  background: #eee;
+	background: #eee;
 }
 
 .close {
-  visibility: hidden;
-  position: absolute;
-  right: 5px;
-  padding: 5px;
-  background: rgba(255,255,255,0.25);
-  border-radius: 20px;
+	visibility: hidden;
+	position: absolute;
+	right: 5px;
+	padding: 5px;
+	background: rgba(255,255,255,0.25);
+	border-radius: 20px;
 }
 .tab:hover .close {
-  visibility: visible;
+	visibility: visible;
 }
 .close:hover { color: red; }
 
 .tab .favicon {
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
-  margin-right: 8px;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin-right: 8px;
 }
 
 .tab .details {
-  display: inline-block;
-  max-width: 93%;
-  vertical-align: middle;
+	display: inline-block;
+	max-width: 93%;
+	vertical-align: middle;
 }
 
 .tab .title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-weight: bold;
 }
 
 .tab .url {
-  font-weight: normal;
+	font-weight: normal;
 }
