@@ -1,4 +1,4 @@
-WhichTabs
+SwitchTab
 =========
 A simple Chrome extension for switching between open tabs across all windows with minimal effort.
 

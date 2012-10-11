@@ -1,8 +1,8 @@
 {
-  "name": "TABS!",
+  "name": "SwitchTab",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "Quickly jump between all your open tabs!",
+  "description": "Quickly jump between open tabs across all windows!",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
