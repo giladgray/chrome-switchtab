@@ -2,26 +2,38 @@ body {
   width: 400px;
   overflow-x:hidden;
   font-family: sans-serif;
+  margin-top: 50px;
 }
 
 input {
-  width: 100%;
+  width: 400px;
   box-sizing: border-box;
   font-size: 18px;
   padding: 4px 6px;
+  position: fixed;
+  top: 5px;
+}
+
+#tabs {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .tab {
   display: block;
   max-width: 370px;
+
   padding: 5px;
   font-size: 14px;
   line-height: 16px;
-}
-.tab + .tab {
   border-top: 1px solid gray;
 }
-.tab:hover {
+.tab:last-child {
+  border-bottom: 1px solid gray;
+}
+/* highlight hovered tab and first tab ([enter] to select first tab) */
+.tab:hover, .tab:first-child {
   background: #eee;
 }
 
