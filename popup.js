@@ -12,7 +12,8 @@ chrome.tabs.query({}, function(result) {
     	.append($('<img>').addClass('favicon').attr('src', tab.favIconUrl))
     	.append($('<span>').addClass('details')
     		.append($('<div>').addClass('title').text(tab.title))
-    		.append($('<div>').addClass('url title').text(tab.url)));
+    		.append($('<div>').addClass('url title').text(tab.url)))
+      .append($('<span>').addClass('close').html('&times;'));
   };
 
   // for starters, put all tabs in the list
@@ -40,6 +41,7 @@ chrome.tabs.query({}, function(result) {
     });
     // configure event handlers for all these new tabs
     list.find('.tab').click(selectTab);
+    list.find('.close').click(closeTab);
   });
 });
 
@@ -49,4 +51,10 @@ function selectTab(event) {
   console.log("Switching to tab " + match[1] + "in window " + match[2]);
   chrome.windows.update(parseInt(match[1]), {'focused': true});
   chrome.tabs.update(parseInt(match[2]), {'active': true});
+}
+
+function closeTab(event) {
+  event.preventDefault();
+  match = /(\d+)#(\d+)/.exec($(event.currentTarget).parent().attr('href'));
+  chrome.tabs.remove(parseInt(match[2]));
 }
