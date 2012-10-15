@@ -4,13 +4,29 @@ body {
   font-family: sans-serif;
   margin-top: 50px; }
 
-input {
-  width: 400px;
-  box-sizing: border-box;
-  font-size: 18px;
-  padding: 4px 6px;
+#filter {
   position: fixed;
-  top: 5px; }
+  top: 8px; }
+  #filter input {
+    width: 400px;
+    height: 36px;
+    box-sizing: border-box;
+    font-size: 18px;
+    padding: 4px 6px; }
+  #filter .label {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    height: 18px;
+    min-width: 18px;
+    padding: 2px 6px;
+    margin-top: -11px;
+    border-radius: 15px;
+    background: #999;
+    color: white;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center; }
 
 #tabs {
   max-height: 500px;
@@ -26,7 +42,8 @@ input {
   padding-top: 6px;
   font-size: 14px;
   line-height: 18px;
-  border-top: 1px solid gray; }
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #ccc; }
   .tab .close {
     visibility: hidden;
     position: absolute;
@@ -57,10 +74,11 @@ input {
 .tab:last-child {
   border-bottom: 1px solid gray; }
 
-/* highlight hovered tab and first tab ([enter] to select first tab) */
+/* highlight active tab ([enter] to select active tab) */
 .tab.active {
-  background: #ddd;
-  border-left: 4px solid orange;
+  color: white;
+  background: orange;
+  border-left: 5px solid #d68b00;
   margin-top: 0; }
   .tab.active .close {
     visibility: visible; }

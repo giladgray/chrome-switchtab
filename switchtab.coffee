@@ -1,20 +1,22 @@
 # event handler for selecting a tab
 selectTab = (event) ->
   event.preventDefault()
-  match = /(\d+)#(\d+)/.exec($(event.currentTarget).attr('href'))
-  console.log 'Switching to tab ' + match[1] + 'in window ' + match[2]
-  chrome.windows.update parseInt(match[1]),
-    focused: true
-
-  chrome.tabs.update parseInt(match[2]),
-    active: true
+  # extract the window and tab IDs from href
+  match = /(\d+)#(\d+)/.exec $(event.currentTarget).attr('href')
+  console.log "Switching to tab #{match[1]} n window #{match[2]}"
+  # first focus on the containing window
+  chrome.windows.update parseInt(match[1]), focused: true
+  # then select the tab itself
+  chrome.tabs.update parseInt(match[2]), active: true
 
 highlightTab = (event) ->
   doHighlight $(event.currentTarget)
 
+# make this tab the active tab if it exists
 doHighlight = (tab) ->
-  $('.tab.active').removeClass 'active'
-  tab.addClass 'active'
+  if tab[0]?
+    $('.tab.active').removeClass 'active'
+    tab.addClass 'active'
 
 
 # event handler for closing tab
@@ -35,42 +37,48 @@ template = (tab) ->
   </a>
   """
 
-# hash of jQuery tab objects
+# update label after changing tabs -- reset count, colorize
+updateLabel = () ->
+  $("#count").text size = $('.tab').size()
+  $('#count').css 'background', 
+    switch size
+      when 0 then 'firebrick'
+      when 1 then 'orange'
+      else '#999'
+  doHighlight $('.tab').first()
+
+# hash of jQuery tab objects, for searching speed
 tabs = {}
 
 chrome.tabs.query {}, (result) ->
   # build a hash of tab HTML elements so we don't have to create new ones all the time
   for tab in result
-    tabs['' + tab.id] = $(template(tab))
+    tabs['' + tab.id] = $(template tab)
 
-  # for starters, put all tabs in the list
+  # for starters, put all tabs in the list and highlight the first
   body = $('#tabs').html('')
   body.append tab for key, tab of tabs
-  doHighlight $('.tab').first()
+  updateLabel()
 
+  # register events on the body so they're always in play
   $('body')
     .on('click', '.tab', selectTab)
     .on('click', '.close', closeTab)
     .on('mouseover', '.tab', highlightTab)
 
   $('#search').keyup (event) ->
-    console.log event.which
-    # pressing enter goes to first tab
     switch event.which
-      when 13 # enter
+      when 13  # enter - click active tab
         $('.tab.active').click()
-        return
-      when 40 # down
+      when 40  # down - next tab
         doHighlight $('.tab.active').next()
-      when 38 # up
+      when 38  # up - previous tab
         doHighlight $('.tab.active').prev()
       else
-
         # filter tabs using ignore-case regex of search term against tab title.
         # replace spaces in query with regex to match anything -- fuzzy compare!
         regex = new RegExp($('#search').val().replace(/\s/g, '.*'), 'i')
-        console.log 'searching for ' + regex + '...'
-        list = $('#tabs').text('')
+        list = $('#tabs').html('')
         list.append tab for key, tab of tabs when regex.test(tab.find('.title').text())
-        doHighlight $('.tab').first()
+        updateLabel()
 

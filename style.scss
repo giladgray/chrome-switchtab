@@ -5,13 +5,34 @@ body {
 	margin-top: 50px;
 }
 
-input {
-	width: 400px;
-	box-sizing: border-box;
-	font-size: 18px;
-	padding: 4px 6px;
+#filter {
 	position: fixed;
-	top: 5px;
+	top: 8px;
+
+	input {
+		width: 400px;
+		height: 36px;
+		box-sizing: border-box;
+		font-size: 18px;
+		padding: 4px 6px;
+	}
+
+	.label {
+		position: absolute;
+		top: 18px;
+		right: 10px;
+		height: 18px;
+		min-width: 18px;
+		padding: 2px 6px;
+		margin-top: -11px;
+		border-radius: 15px;
+
+		background: #999;
+		color: white;
+		font-size: 12px;
+		line-height: 18px;
+		text-align: center;
+	}
 }
 
 #tabs {
@@ -30,8 +51,8 @@ input {
 	padding-top: 6px;
 	font-size: 14px;
 	line-height: 18px;
-	border-top: 1px solid gray;
-	// border-bottom: 1px solid whitesmoke;
+	border-top: 1px solid #666;
+	border-bottom: 1px solid #ccc;
 
 	.close {
 		visibility: hidden;
@@ -67,17 +88,19 @@ input {
 	.url {
 		font-weight: normal;
 	}
+
 }
+
 .tab:last-child {
 	border-bottom: 1px solid gray;
 }
 
-/* highlight hovered tab and first tab ([enter] to select first tab) */
-$highlightWidth: 4px;
+/* highlight active tab ([enter] to select active tab) */
+$highlightWidth: 5px;
 .tab.active {
-	background: #ddd;
-	border-left: $highlightWidth solid orange;
-	// margin-left: -$highlightWidth;
+	color: white;
+	background: orange;
+	border-left: $highlightWidth solid darken(orange, 8%);
 	margin-top: 0;
 	.close {
 		visibility: visible;

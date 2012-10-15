@@ -9,7 +9,10 @@
 		<script src="switchtab.js"></script>
 	</head>
 	<body>
-		<input type="text" id="search" placeholder="filter tabs">
-		<div id="tabs"></div>
+		<div id="filter">
+			<input type="text" id="search" placeholder="filter tabs">
+			<span class="label" id="count"></span>
+		</div>
+		<div id="tabs"><span class="loading">Fetching tabs...</span></div>
 	</body>
 </html>
