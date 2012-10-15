@@ -10,5 +10,11 @@
   "permissions": [
     "http://code.jquery.com/",
     "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["hotkey.js"]
+    }
   ]
 }
