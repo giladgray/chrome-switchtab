@@ -1,4 +1,6 @@
-body {
+$highlightWidth: 5px;
+
+#switchtab {
 	width: 400px;
 	overflow-x:hidden;
 	font-family: sans-serif;
@@ -14,7 +16,7 @@ body {
 		height: 36px;
 		box-sizing: border-box;
 		font-size: 18px;
-		padding: 4px 6px;
+		padding: 4px 42px 4px 6px;
 	}
 
 	.label {
@@ -32,6 +34,8 @@ body {
 		font-size: 12px;
 		line-height: 18px;
 		text-align: center;
+
+		cursor: pointer;
 	}
 }
 
@@ -53,6 +57,22 @@ body {
 	line-height: 18px;
 	border-top: 1px solid #666;
 	border-bottom: 1px solid #ccc;
+
+	/* last-child gets special border */
+	&:last-child {
+		border-bottom: 1px solid gray;
+	}
+
+	/* highlight active tab ([enter] to select active tab) */
+	&.active {
+		color: white;
+		background: orange;
+		border-left: $highlightWidth solid darken(orange, 8%);
+		margin-top: 0;
+		.close {
+			visibility: visible;
+		}
+	}
 
 	.close {
 		visibility: hidden;
@@ -89,20 +109,4 @@ body {
 		font-weight: normal;
 	}
 
-}
-
-.tab:last-child {
-	border-bottom: 1px solid gray;
-}
-
-/* highlight active tab ([enter] to select active tab) */
-$highlightWidth: 5px;
-.tab.active {
-	color: white;
-	background: orange;
-	border-left: $highlightWidth solid darken(orange, 8%);
-	margin-top: 0;
-	.close {
-		visibility: visible;
-	}
 }

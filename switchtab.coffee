@@ -3,7 +3,7 @@ selectTab = (event) ->
   event.preventDefault()
   # extract the window and tab IDs from href
   match = /(\d+)#(\d+)/.exec $(event.currentTarget).attr('href')
-  console.log "Switching to tab #{match[1]} n window #{match[2]}"
+  console.log "Switching to tab #{match[1]} in window #{match[2]}"
   # first focus on the containing window
   chrome.windows.update parseInt(match[1]), focused: true
   # then select the tab itself
@@ -38,14 +38,23 @@ template = (tab) ->
   """
 
 # update label after changing tabs -- reset count, colorize
-updateLabel = () ->
+updateLabel = ->
   $("#count").text size = $('.tab').size()
-  $('#count').css 'background', 
+  $('#count').css 'background-color', 
     switch size
       when 0 then 'firebrick'
       when 1 then 'orange'
       else '#999'
   doHighlight $('.tab').first()
+
+# filter tabs using ignore-case regex of search term against tab title and URL.
+filterTabs = ->
+  # replace spaces in query with regex to match anything -- fuzzy compare!
+  regex = new RegExp($('#search').val().replace(/\s/g, '.*'), 'i')
+  list = $('#tabs').html('')
+  list.append tab for key, tab of tabs when regex.test(tab.find('.title').text())
+  updateLabel()
+
 
 # hash of jQuery tab objects, for searching speed
 tabs = {}
@@ -75,10 +84,10 @@ chrome.tabs.query {}, (result) ->
       when 38  # up - previous tab
         doHighlight $('.tab.active').prev()
       else
-        # filter tabs using ignore-case regex of search term against tab title.
-        # replace spaces in query with regex to match anything -- fuzzy compare!
-        regex = new RegExp($('#search').val().replace(/\s/g, '.*'), 'i')
-        list = $('#tabs').html('')
-        list.append tab for key, tab of tabs when regex.test(tab.find('.title').text())
-        updateLabel()
+        filterTabs()
+
+  # click on counter to clear filter
+  $('#count').click ->
+    $('#search').val('').focus()
+    filterTabs()
 
