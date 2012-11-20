@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Getting Started Extension's Popup</title>
+		<title>SwitchTab -> go to it </title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 
 		<!-- JavaScript and HTML must be in separate files for security. -->
@@ -11,8 +11,10 @@
 	<body>
 		<div id="switchtab">
 			<div id="filter">
-				<input type="text" id="search" placeholder="filter tabs">
-				<span class="label" id="count"></span>
+				<span class="container">
+					<input type="text" id="search" placeholder="filter tabs" autofocus>
+					<span class="label" id="count"></span>
+				</span>
 			</div>
 			<div id="tabs"><span class="loading">Fetching tabs...</span></div>
 		</div>

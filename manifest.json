@@ -5,15 +5,18 @@
   "description": "Quickly jump between open tabs across all windows!",
   "browser_action": {
     "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "SwitchTab"
   },
   "permissions": [
     "http://code.jquery.com/",
-    "tabs"
+    "tabs", 
+    "http://*/*"
   ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "html": ["popup.html"],
       "js": ["hotkey.js"],
       "css": ["style.css"]
     }

@@ -2,8 +2,12 @@
 (function() {
 
   window.addEventListener('keydown', function(event) {
+    var height, left, popup, width;
     if (event.altKey && event.which === 84) {
-      return console.log("HOTKEY!");
+      width = localStorage['switchtab_width'] || 420;
+      height = localStorage['switchtab_height'] || 500;
+      left = (screen.width - height) / 2;
+      return popup = window.open(chrome.extension.getURL('popup.html'), '_blank', "height=" + height + ",width=" + width + ",left=" + left + ",location=0,menubar=0,status=0,titlebar=0,toolbar=0");
     }
   });
 
