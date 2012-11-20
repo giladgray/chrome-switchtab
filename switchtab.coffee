@@ -4,6 +4,8 @@ selectTab = (event) ->
   # extract the window and tab IDs from href
   match = /(\d+)#(\d+)/.exec $(event.currentTarget).attr('href')
   console.log "Switching to tab #{match[1]} in window #{match[2]}"
+  # close the popup window now that we're done with it
+  window.close()
   # first focus on the containing window
   chrome.windows.update parseInt(match[1]), focused: true
   # then select the tab itself

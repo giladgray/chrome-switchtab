@@ -15,6 +15,8 @@ $highlightWidth: 5px;
 	text-align: center;
 }
 
+.container { position: relative; }
+
 #switchtab {
 	width: 400px;
 	height: 400px;
@@ -62,72 +64,70 @@ $highlightWidth: 5px;
 	bottom: 10px;
 	overflow-x: hidden;
 	overflow-y: auto;
-}
 
-.container { position: relative; }
+	.tab {
+		display: block;
+		width: 100%;
+		position: relative;
+		box-sizing: border-box;
 
-.tab {
-	display: block;
-	width: 100%;
-	position: relative;
-	box-sizing: border-box;
+		color: #333;
+		padding: 5px 0 5px 5px;
+		font-size: 14px;
+		line-height: 18px;
+		border-top: 1px solid #666;
+		border-bottom: 1px solid #ccc;
 
-	color: #333;
-	padding: 5px 0 5px 5px;
-	font-size: 14px;
-	line-height: 18px;
-	border-top: 1px solid #666;
-	border-bottom: 1px solid #ccc;
-
-	/* last-child gets special border */
-	&:last-child {
-		border-bottom: 1px solid gray;
-	}
-
-	/* highlight active tab ([enter] to select active tab) */
-	&.active {
-		color: white;
-		background: orange;
-		border-left: $highlightWidth solid darken(orange, 8%);
-		margin-top: 0;
-		.close {
-			visibility: visible;
+		/* last-child gets special border */
+		&:last-child {
+			border-bottom: 1px solid gray;
 		}
-	}
 
-	.close {
-		visibility: hidden;
-		position: absolute;
-		right: 5px;
-		padding: 5px;
-		background: rgba(255,255,255,0.25);
-		border-radius: 20px;
-	}
-	.close:hover { color: red; }
+		/* highlight active tab ([enter] to select active tab) */
+		&.active {
+			color: white;
+			background: orange;
+			border-left: $highlightWidth solid darken(orange, 8%);
+			margin-top: 0;
+			.close {
+				visibility: visible;
+			}
+		}
 
-	.favicon {
-		width: 16px;
-		height: 16px;
-		vertical-align: middle;
-		margin-right: 8px;
-		margin-left: 4px;
-	}
+		.close {
+			visibility: hidden;
+			position: absolute;
+			right: 5px;
+			padding: 5px;
+			background: rgba(255,255,255,0.25);
+			border-radius: 20px;
+		}
+		.close:hover { color: red; }
 
-	.details {
-		display: inline-block;
-		max-width: 90%;
-		vertical-align: middle;
-	}
+		.favicon {
+			width: 16px;
+			height: 16px;
+			vertical-align: middle;
+			margin-right: 8px;
+			margin-left: 4px;
+		}
 
-	.title {
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		font-weight: bold;
-	}
+		.details {
+			display: inline-block;
+			max-width: 90%;
+			vertical-align: middle;
+		}
 
-	.url {
-		font-weight: normal;
-	}
+		.title {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			font-weight: bold;
+		}
 
+		.url {
+			font-weight: normal;
+		}
+
+	}
 }

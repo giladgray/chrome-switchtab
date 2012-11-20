@@ -7,6 +7,7 @@
     event.preventDefault();
     match = /(\d+)#(\d+)/.exec($(event.currentTarget).attr('href'));
     console.log("Switching to tab " + match[1] + " in window " + match[2]);
+    window.close();
     chrome.windows.update(parseInt(match[1]), {
       focused: true
     });
