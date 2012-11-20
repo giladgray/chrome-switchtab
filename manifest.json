@@ -16,9 +16,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "html": ["popup.html"],
-      "js": ["hotkey.js"],
-      "css": ["style.css"]
+      "js": ["hotkey.js"]
     }
   ]
 }
