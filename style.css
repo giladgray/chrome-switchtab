@@ -8,8 +8,7 @@
    * proper window sizing but not care about it for 
    * scrolling */
   overflow: hidden;
-  font-family: sans-serif;
-  margin-top: 50px; }
+  font-family: sans-serif; }
 
 #filter {
   position: absolute;

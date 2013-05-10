@@ -1,3 +1,5 @@
+MAX_HEIGHT = 450
+
 # event handler for selecting a tab
 selectTab = (event) ->
   event.preventDefault()
@@ -29,7 +31,7 @@ closeTab = (event) ->
 # HTML tab template
 template = (tab) ->
   """
-  <a class='tab' href='#{tab.windowId}##{tab.id}'>
+  <a class='tab' href='#{tab.windowId}##{tab.id}' data-window='#{tab.windowId}' data-tab='#{tab.id}'>
     <img class='favicon' src='#{tab.favIconUrl}' />
     <span class='details'>
       <div class='title'>#{tab.title}</div>
@@ -39,21 +41,23 @@ template = (tab) ->
   """
 
 # update label after changing tabs -- reset count, colorize
-updateLabel = ->
+updateLabel = (resize) ->
   $('#count').text(size = $('.tab').size()).css 'background-color', 
     switch size
       when 0 then 'firebrick'
       when 1 then 'orange'
       else '#999'
+  # attempt to resize the window based on contents. doesn't work very well in the popup window.
+  $('#switchtab').height(Math.min(50 + $('.tab').height() * size, MAX_HEIGHT)) if resize
   doHighlight $('.tab').first()
 
 # filter tabs using ignore-case regex of search term against tab title and URL.
-filterTabs = (tabs) ->
+filterTabs = (tabs, query='') ->
   # replace spaces in query with regex to match anything -- fuzzy compare!
-  regex = new RegExp($('#search').val().replace(/\s/g, '.*'), 'i')
+  regex = new RegExp(query.replace(/\s/g, '.*'), 'i')
   list = $('#tabs').html('')
   list.append tab for key, tab of tabs when regex.test(tab.find('.title').text())
-  updateLabel()
+  updateLabel(true)
 
 resetFilter = (tabs) ->
   $('#search').val('').focus()
@@ -67,9 +71,7 @@ chrome.tabs.query {}, (result) ->
     tabs['' + tab.id] = $(template tab)
 
   # for starters, put all tabs in the list and highlight the first
-  body = $('#tabs').html('')
-  body.append tab for key, tab of tabs
-  updateLabel()
+  filterTabs(tabs)
 
   # register events on the body so they're always in play
   $('body')
@@ -79,7 +81,7 @@ chrome.tabs.query {}, (result) ->
 
   $('#search').keyup (event) ->
     switch event.which
-      # enter - click active tab
+      # enter - click active tab or reset if 0 results
       when 13 
         active = $('.tab.active')
         if active.size() > 0 then active.click() else resetFilter(tabs)
@@ -88,7 +90,7 @@ chrome.tabs.query {}, (result) ->
       # down - next tab
       when 40 then doHighlight $('.tab.active').next()
       # otherwise update filter
-      else filterTabs(tabs)
+      else filterTabs tabs, @value
 
   # click on counter to clear filter
   $('#count').click -> resetFilter(tabs)
