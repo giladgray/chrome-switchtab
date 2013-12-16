@@ -21,7 +21,7 @@ module.exports = (grunt) ->
 
 
     clean:
-      dist: [".tmp", "dist/*", "!dist/.git*"]
+      dist: [".tmp", "dist"]
 
     coffee:
       dist:
@@ -54,8 +54,15 @@ module.exports = (grunt) ->
 
     concat:
       dist:
-        src:  ['bower_components/jquery/jquery.js', '.tmp/*.js']
+        src:  ['bower_components/jquery/jquery.js', '.tmp/*.js', '!.tmp/hotkey.js']
         dest: 'dist/switchtab.js'
+
+    copy:
+      dist:
+        expand: true
+        cwd:  '.tmp/'
+        src:  ['hotkey.js']
+        dest: 'dist/'
 
     requirejs:
       dist:
@@ -87,7 +94,7 @@ module.exports = (grunt) ->
           run: true
           urls: ["http://localhost:<%= connect.options.port %>/index.html"]
 
-  grunt.registerTask "build", ["clean:dist", "sass", "coffee:dist", "concat"]
+  grunt.registerTask "build", ["clean:dist", "sass", "coffee:dist", "copy", "concat"]
   grunt.registerTask "test", ["build", "mocha"]
 
   grunt.registerTask "default", ["build"]
