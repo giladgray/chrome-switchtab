@@ -16,6 +16,6 @@ SwitchTab has not been submitted to the Chrome Web Store yet but you can still i
 7. If it complains about missing files then follow the Development instructions below.
 
 ## Development
-1. `npm install`
+1. `npm install && bower install`
 2. `grunt build` or simply `grunt` to compile and build all files (in the `dist/` folder)
 3. `grunt watch` to watch files and re-compile on change
