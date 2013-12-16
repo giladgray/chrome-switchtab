@@ -25,9 +25,10 @@ highlightTab = (event) ->
 
 # make this tab the active tab if it exists
 doHighlight = (tab) ->
-  if tab[0]?
-    $('.tab.active').removeClass 'active'
-    tab.addClass 'active'
+  # select by index if passed a number
+  if typeof tab is 'number'
+    tab = $ $('.tab.match')[tab]
+  tab.takeClass 'active' if tab[0]?
 
 # event handler for closing tab
 closeTab = (event) ->
@@ -49,7 +50,7 @@ template = (tab) ->
 
 # update label after changing tabs -- reset count, colorize
 updateLabel = (resize) ->
-  $('#count').text(size = $('.tab').size()).css 'background-color',
+  $('#count').text(size = $('.tab.match').size()).css 'background-color',
     switch size
       when 0 then 'firebrick'
       when 1 then 'orange'
@@ -82,11 +83,19 @@ resetFilter = (tabs) ->
 chrome.tabs.query {}, (result) ->
   # cache jQuery selector for future use
   $tabs = $('#tabs')
+  $window = null
+  thisWindow = -1
   for tab in result
-    $tabs.append $(template tab)
+    if tab.windowId isnt thisWindow
+      # make a new window element for tabs
+      $window = $('<div>').addClass('window')
+      $tabs.append $window
+      thisWindow = tab.windowId
+    # add tab to current window
+    $window.append $(template tab)
 
   # for starters, put all tabs in the list and highlight the first
-  filterTabs(tabs)
+  filterTabs()
 
   # register events on the body so they're always in play
   $('body')
@@ -101,9 +110,9 @@ chrome.tabs.query {}, (result) ->
         active = $('.tab.active')
         if active.size() > 0 then active.click() else resetFilter(tabs)
       # up - previous tab
-      when 38 then doHighlight $('.tab.active').prevAll('.match:first')
+      when 38 then doHighlight $('.tab.match').index($('.tab.active')) - 1
       # down - next tab
-      when 40 then doHighlight $('.tab.active').nextAll('.match:first')
+      when 40 then doHighlight $('.tab.match').index($('.tab.active')) + 1
       # otherwise update filter
       else filterTabs tabs, @value
 

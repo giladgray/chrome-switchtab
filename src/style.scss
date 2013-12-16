@@ -2,7 +2,7 @@ $width: 400px;
 $height: 400px;
 $filterHeight: 50px;
 
-$highlightWidth: 5px;
+$highlightWidth: 3px;
 
 @mixin stretch-box($position: absolute) {
 	position: $position;
@@ -82,32 +82,42 @@ $highlightWidth: 5px;
 		padding: 2em;
 	}
 
+	.window {
+		margin-bottom: $highlightWidth * 2;
+		border-radius: $highlightWidth * 2;
+		border: $highlightWidth solid #ccc;
+	}
+
 	.tab {
 		display: block;
 		width: 100%;
-		height: 0px;
+		height: 3px;
 		position: relative;
 		box-sizing: border-box;
 		overflow: hidden;
+		background: #f3f3f3;
 
 		color: #333;
 		font-size: 14px;
 		line-height: 18px;
-		border-top: 1px solid #666;
 		border-bottom: 1px solid #ccc;
 
 		@include transition(all .3s ease);
 
-		/* last-child gets special border */
+		&:first-child {
+			border-radius: $highlightWidth $highlightWidth 0 0;
+		}
+
+		/* last-child has no border and loses a pixel of height */
 		&:last-child {
-			border-bottom: 1px solid gray;
+			height: 2px;
+			border-bottom: none;
+			border-radius: 0 0 $highlightWidth $highlightWidth;
 		}
 
 		/* highlight active tab ([enter] to select active tab) */
 		&.active {
-			color: white;
-			background: orange;
-			border-left: $highlightWidth solid darken(orange, 8%);
+			background: rgb(81, 203, 238);
 			margin-top: 0;
 			.close {
 				visibility: visible;
