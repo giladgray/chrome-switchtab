@@ -4,19 +4,19 @@
   "manifest_version": 2,
   "description": "Quickly jump between open tabs across all windows!",
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "assets/icon.png",
     "default_popup": "popup.html",
     "default_title": "SwitchTab"
   },
   "permissions": [
     "http://code.jquery.com/",
-    "tabs", 
+    "tabs",
     "http://*/*"
   ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["hotkey.js"]
+      "js": ["dist/hotkey.js"]
     }
   ]
 }
