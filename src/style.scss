@@ -1,3 +1,7 @@
+$width: 400px;
+$height: 400px;
+$filterHeight: 50px;
+
 $highlightWidth: 5px;
 
 @mixin stretch-box($position: absolute) {
@@ -15,13 +19,20 @@ $highlightWidth: 5px;
 	text-align: center;
 }
 
+@mixin transition($arguments) {
+	-webkit-transition: $arguments;
+	transition: $arguments;
+}
+
 .container { position: relative; }
 
+.disable-hover { pointer-events: none; }
+
 #switchtab {
-	width: 400px;
-	height: 400px;
-	/* hiding the overflow lets us set the height for 
-	 * proper window sizing but not care about it for 
+	width: $width;
+	height: $height;
+	/* hiding the overflow lets us set the height for
+	 * proper window sizing but not care about it for
 	 * scrolling */
 	overflow: hidden;
 	font-family: sans-serif;
@@ -59,23 +70,33 @@ $highlightWidth: 5px;
 
 #tabs {
 	@include stretch-box;
-	top: 56px;
-	bottom: 10px;
+	top: $filterHeight + 6px;
+	max-height: $height - $filterHeight;
 	overflow-x: hidden;
 	overflow-y: auto;
+
+	&:empty:before {
+		content: 'Loading...';
+		display: block;
+		text-align: center;
+		padding: 2em;
+	}
 
 	.tab {
 		display: block;
 		width: 100%;
+		height: 0px;
 		position: relative;
 		box-sizing: border-box;
+		overflow: hidden;
 
 		color: #333;
-		padding: 5px 0 5px 5px;
 		font-size: 14px;
 		line-height: 18px;
 		border-top: 1px solid #666;
 		border-bottom: 1px solid #ccc;
+
+		@include transition(all .3s ease);
 
 		/* last-child gets special border */
 		&:last-child {
@@ -93,6 +114,10 @@ $highlightWidth: 5px;
 			}
 		}
 
+		&.match {
+			height: 48px;
+		}
+
 		.close {
 			visibility: hidden;
 			position: absolute;
@@ -107,13 +132,13 @@ $highlightWidth: 5px;
 			width: 16px;
 			height: 16px;
 			vertical-align: middle;
-			margin-right: 8px;
-			margin-left: 4px;
+			margin: 5px;
 		}
 
 		.details {
 			display: inline-block;
-			max-width: 90%;
+			margin: 5px;
+			max-width: 89%;
 			vertical-align: middle;
 		}
 
