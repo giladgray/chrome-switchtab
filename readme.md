@@ -13,3 +13,8 @@ SwitchTab has not been submitted to the Chrome Web Store yet but you can still i
 4. Click "Load unpacked extension..." button
 5. Select the `chrome-switchtabs` repository folder (it's a valid extension)
 6. Profit
+
+## Development
+1. `npm install`
+2. `grunt build` or simply `grunt` to compile and build all files (in the `dist/` folder)
+3. `grunt watch` to watch files and re-compile on change
