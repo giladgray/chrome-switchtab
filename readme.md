@@ -13,6 +13,7 @@ SwitchTab has not been submitted to the Chrome Web Store yet but you can still i
 4. Click "Load unpacked extension..." button
 5. Select the `chrome-switchtabs` repository folder (it's a valid extension)
 6. Profit
+7. If it complains about missing files then follow the Development instructions below.
 
 ## Development
 1. `npm install`
