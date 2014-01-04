@@ -2,6 +2,7 @@ MAX_HEIGHT = localStorage['switchtab_height'] or 400
 ANIM_TIME = 1000 * .3
 
 $tabs = undefined
+tabCount = 0
 
 $.fn.takeClass = (targetClass, scope='') ->
   $("#{scope} .#{targetClass}").removeClass targetClass
@@ -61,7 +62,7 @@ updateLabel = (resize) ->
   , ANIM_TIME
 
 # filter tabs using ignore-case regex of search term against tab title and URL.
-filterTabs = (tabs, query='') ->
+filterTabs = (query='') ->
   # replace spaces in query with regex to match anything -- fuzzy compare!
   regex = new RegExp(query.replace(/\s/g, '.*'), 'i')
   # filter tabs by adding a "match" class if the regex passes test
@@ -76,9 +77,10 @@ filterTabs = (tabs, query='') ->
 
   updateLabel(false)
 
-resetFilter = (tabs) ->
+resetFilter = () ->
   $('#search').val('').focus()
-  filterTabs(tabs)
+  filterTabs()
+
 
 chrome.tabs.query {}, (result) ->
   # cache jQuery selector for future use
@@ -92,7 +94,11 @@ chrome.tabs.query {}, (result) ->
       $tabs.append $window
       thisWindow = tab.windowId
     # add tab to current window
-    $window.append $(template tab)
+    $window.append template tab
+  # tab and window counts
+  tabCount = $('.tab').size()
+  $tabs.append $('<div>').addClass('footer')
+    .text("#{tabCount} tab#{if tabCount > 0 then 's' else ''} across #{$('.window').size()} windows")
 
   # for starters, put all tabs in the list and highlight the first
   filterTabs()
@@ -103,6 +109,7 @@ chrome.tabs.query {}, (result) ->
     .on('click', '.close', closeTab)
     .on('mouseover', '.tab', highlightTab)
 
+  # some keyevents
   $('#search').keyup (event) ->
     switch event.which
       # enter - click active tab or reset if 0 results
@@ -113,8 +120,7 @@ chrome.tabs.query {}, (result) ->
       when 38 then doHighlight $('.tab.match').index($('.tab.active')) - 1
       # down - next tab
       when 40 then doHighlight $('.tab.match').index($('.tab.active')) + 1
-      # otherwise update filter
-      else filterTabs tabs, @value
+      else filterTabs @value
 
   # click on counter to clear filter
   $('#count').click -> resetFilter(tabs)

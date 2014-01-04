@@ -117,7 +117,7 @@ $highlightWidth: 3px;
 
 		/* highlight active tab ([enter] to select active tab) */
 		&.active {
-			background: rgb(81, 203, 238);
+			background: orange;
 			margin-top: 0;
 			.close {
 				visibility: visible;
@@ -163,5 +163,12 @@ $highlightWidth: 3px;
 			font-weight: normal;
 		}
 
+	}
+
+	.footer {
+		text-align: center;
+		color: #999;
+		padding: 3px;
+		font-size: 14px;
 	}
 }
