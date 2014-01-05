@@ -1,8 +1,11 @@
 $width: 400px;
 $height: 400px;
-$filterHeight: 50px;
+$filterHeight: 67px;
+$heightBuffer: 6px;
 
-$highlightWidth: 3px;
+$highlightWidth: 6px;
+
+$orange: orange;
 
 @mixin stretch-box($position: absolute) {
 	position: $position;
@@ -19,7 +22,7 @@ $highlightWidth: 3px;
 	text-align: center;
 }
 
-@mixin transition($arguments) {
+@mixin transition($arguments...) {
 	-webkit-transition: $arguments;
 	transition: $arguments;
 }
@@ -27,6 +30,21 @@ $highlightWidth: 3px;
 .container { position: relative; }
 
 .disable-hover { pointer-events: none; }
+
+.table-row {
+    display: table;
+    overflow: hidden;
+
+    & > .fixed,
+    & > .variable {
+        position: relative;
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .fixed    { width: 0; }
+    .variable { width: 100%; }
+}
 
 #switchtab {
 	width: $width;
@@ -43,14 +61,31 @@ $highlightWidth: 3px;
 	top: 0;
 	z-index: 3;
 	background: white;
-	padding: 10px 10px 0;
+	margin: 10px 10px 0;
+	padding: 10px;
+
+	border-radius: $highlightWidth;
+	box-shadow: 0px 0px ($highlightWidth / 2) rgba(0,0,0,0.7);
+
+	.prompt {
+		font-size: 18px;
+		color: gray;
+		padding: 2px 0;
+	}
 
 	input {
-		width: 100%;
-		height: 36px;
-		box-sizing: border-box;
+		width: 280px;
 		font-size: 18px;
-		padding: 4px 50px 4px 6px;
+		box-sizing: border-box;
+		padding: 2px;
+		margin: 0;
+
+		outline: none;
+		border: none;
+		@include transition(border-color .3s ease);
+		border-bottom: 2px solid #ccc;
+		&:focus { border-color: $orange; }
+
 	}
 
 	.label {
@@ -65,13 +100,14 @@ $highlightWidth: 3px;
 		color: white;
 
 		cursor: pointer;
+		@include transition(background .3s ease);
 	}
 }
 
 #tabs {
 	@include stretch-box;
-	top: $filterHeight + 6px;
-	max-height: $height - $filterHeight;
+	top: $filterHeight;
+	max-height: $height - $filterHeight + $heightBuffer;
 	overflow-x: hidden;
 	overflow-y: auto;
 
@@ -83,9 +119,11 @@ $highlightWidth: 3px;
 	}
 
 	.window {
-		margin-bottom: $highlightWidth * 2;
-		border-radius: $highlightWidth * 2;
-		border: $highlightWidth solid #ccc;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		border-radius: $highlightWidth;
+		box-shadow: 0px 0px $highlightWidth rgba(0,0,0,0.7);
+		border: 1px solid rgba(0,0,0,0.4);
 	}
 
 	.tab {
@@ -101,6 +139,7 @@ $highlightWidth: 3px;
 		font-size: 14px;
 		line-height: 18px;
 		border-bottom: 1px solid #ccc;
+		padding: 0 10px;
 
 		@include transition(all .3s ease);
 
@@ -117,7 +156,7 @@ $highlightWidth: 3px;
 
 		/* highlight active tab ([enter] to select active tab) */
 		&.active {
-			background: orange;
+			background: $orange;
 			margin-top: 0;
 			.close {
 				visibility: visible;
