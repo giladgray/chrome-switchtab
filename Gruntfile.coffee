@@ -12,16 +12,11 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     watch:
-      coffee:
-        files: ["src/*"]
-        tasks: ["build"]
-      # css:
-      #   files: ["src/*.scss"]
-      #   tasks: ['sass']
-
+      files: ["src/*"]
+      tasks: ["build"]
 
     clean:
-      dist: [".tmp", "dist"]
+      dist: ["dist"]
 
     coffee:
       dist:
@@ -29,7 +24,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "src"
           src: "*.coffee"
-          dest: ".tmp"
+          dest: "dist"
           ext: ".js"
         ]
 
@@ -45,48 +40,16 @@ module.exports = (grunt) ->
     sass:
       dist:
         options:
-          # sassDir: 'src',
-          # cssDir: 'dist',
-          # environment: 'production'
           style: 'compressed'
         files:
           'dist/style.css': 'src/style.scss'
 
-    concat:
-      dist:
-        src:  ['bower_components/jquery/jquery.js', '.tmp/*.js', '!.tmp/hotkey.js']
-        dest: 'dist/switchtab.js'
-
     copy:
       dist:
         expand: true
-        cwd:  '.tmp/'
-        src:  ['hotkey.js']
+        flatten: true
+        src:  ['.tmp/hotkey.js', 'bower_components/jquery/jquery.min.js']
         dest: 'dist/'
-
-    requirejs:
-      dist:
-
-        # Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
-        options:
-          name: 'switchtab'
-          out: 'dist/switchtab.js'
-          optimize: "none"
-
-          # because of coffee-script, we'll have requirejs compile from .tmp folder
-          baseUrl: ".tmp"
-
-          # paths for our own files (not bower_components)
-          paths:
-            jquery: 'node_modules/jquery'
-          # TODO: Figure out how to make sourcemaps work with grunt-usemin
-          # https://github.com/yeoman/grunt-usemin/issues/30
-          #generateSourceMaps: true,
-          # required to support SourceMaps
-          # http://requirejs.org/docs/errors.html#sourcemapcomments
-          preserveLicenseComments: false
-          useStrict: true
-          wrap: false
 
     mocha:
       all:
@@ -94,7 +57,7 @@ module.exports = (grunt) ->
           run: true
           urls: ["http://localhost:<%= connect.options.port %>/index.html"]
 
-  grunt.registerTask "build", ["clean:dist", "sass", "coffee:dist", "copy", "concat"]
+  grunt.registerTask "build", ["clean:dist", "sass", "coffee:dist", "copy"]
   grunt.registerTask "test", ["build", "mocha"]
 
   grunt.registerTask "default", ["build"]
