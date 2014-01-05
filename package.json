@@ -1,7 +1,7 @@
 {
-  "name": "chrome-switchtab",
-  "version": "0.0.0",
-  "description": "switch tabs with ease",
+  "name": "SwitchTab",
+  "version": "0.1.0",
+  "description": "Quickly jump between open tabs across all windows!",
   "main": "switchtab.js",
   "dependencies": {
     "grunt": "~0.4.2"
@@ -18,8 +18,7 @@
     "grunt-symlink": "~0.4.0",
     "matchdep": "~0.3.0",
     "grunt-contrib-sass": "~0.6.0",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-contrib-compass": "~0.7.0"
+    "grunt-contrib-imagemin": "~0.4.0"
   },
   "scripts": {
     "test": "grunt test"
@@ -31,7 +30,7 @@
   "author": "Gilad Gray",
   "license": "MIT",
   "gitHead": "7a3425da851206fd2b06107749c539df95fb9643",
-  "readmeFilename": "readme.md",
+  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/giladgray/chrome-switchtab/issues"
   }
