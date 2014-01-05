@@ -100,6 +100,15 @@ chrome.tabs.query {}, (result) ->
   $tabs.append $('<div>').addClass('footer')
     .text("#{tabCount} tab#{if tabCount > 0 then 's' else ''} across #{$('.window').size()} windows")
 
+  # add borders when top/bottom of tabs list aren't visible
+  $tabs.scroll ->
+    if @scrollTop > 5 then $tabs.addClass('scroll-top')
+    else $tabs.removeClass('scroll-top')
+
+    if @scrollHeight - @scrollTop - @clientHeight > 30
+      $tabs.addClass('scroll-bottom')
+    else $tabs.removeClass('scroll-bottom')
+
   # for starters, put all tabs in the list and highlight the first
   filterTabs()
 

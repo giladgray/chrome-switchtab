@@ -111,6 +111,32 @@ $orange: orange;
 	overflow-x: hidden;
 	overflow-y: auto;
 
+	&:before, &:after {
+		content: ' ';
+		display: block;
+		height: 0px;
+		box-shadow: none
+	}
+
+	// fuzzy borders on top and bottom when scrolled
+	&.scroll-top:before,
+	&.scroll-bottom:after {
+		height: 5px;
+		position: fixed;
+		left: -10px;
+		right: -10px;
+		z-index: 2;
+		@include transition(height .3s ease, box-shadow .3s ease);
+	}
+	&.scroll-top:before {
+		top: $filterHeight;
+		box-shadow: 0 2px 5px rgba(0,0,0,0.4) inset;
+	}
+	&.scroll-bottom:after {
+		top: $height + $heightBuffer;
+		box-shadow: 0 -2px 5px rgba(0,0,0,0.4);
+	}
+
 	&:empty:before {
 		content: 'Loading...';
 		display: block;
