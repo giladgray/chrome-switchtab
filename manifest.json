@@ -16,11 +16,5 @@
     "http://code.jquery.com/",
     "tabs",
     "http://*/*"
-  ],
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["dist/hotkey.js"]
-    }
   ]
 }
