@@ -29,15 +29,6 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
-      test:
-        files: [
-          expand: true
-          cwd: "test/spec"
-          src: "*.coffee"
-          dest: ".tmp/spec"
-          ext: ".js"
-        ]
-
     sass:
       dist:
         options:
@@ -47,36 +38,30 @@ module.exports = (grunt) ->
 
     copy:
       dist:
-        expand: true
+        src:  'bower_components/jquery/jquery.min.js'
+        dest: 'dist/scripts/'
         flatten: true
-        src:  ['bower_components/jquery/jquery.min.js']
-        dest: 'dist/scripts'
 
     imagemin:
       dist:
         expand: true
-        src: ['assets/*.png']
+        src: ['assets/*icon*.png']
         dest: 'dist/'
 
-    mocha:
-      all:
-        options:
-          run: true
-          urls: ["http://localhost:<%= connect.options.port %>/index.html"]
-
+  # run file through grunt template engine in context of package.json
+  # assumes input file starts with _ and maps to output
   grunt.registerTask "template", "process template", (filepath) ->
     grunt.file.write "dist/#{filepath}",
       grunt.template.process grunt.file.read('_' + filepath), data: pkg
 
   grunt.registerTask "build", [
-    "clean:dist",
+    "clean",
     "sass",
-    "coffee:dist",
+    "coffee",
     "copy",
     "template:manifest.json",
     "template:popup.html",
     "imagemin"
   ]
-  grunt.registerTask "test", ["build", "mocha"]
 
   grunt.registerTask "default", ["build"]
