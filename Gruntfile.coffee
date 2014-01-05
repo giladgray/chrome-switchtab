@@ -13,8 +13,18 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     watch:
-      files: ["src/*"]
-      tasks: ["build"]
+      sass:
+        files: ["src/**/*.scss"]
+        tasks: ["sass"]
+      coffee:
+        files: ["src/**/*.coffee"]
+        tasks: ["coffee"]
+      manifest:
+        files: ["_manifest.json"]
+        tasks: ["template:manifest.json"]
+      popup:
+        files: ["_popup.html"]
+        tasks: ["template:popup.html"]
 
     clean:
       dist: ["dist"]
@@ -38,9 +48,10 @@ module.exports = (grunt) ->
 
     copy:
       dist:
+        expand: true
+        flatten: true
         src:  'bower_components/jquery/jquery.min.js'
         dest: 'dist/scripts/'
-        flatten: true
 
     imagemin:
       dist:
