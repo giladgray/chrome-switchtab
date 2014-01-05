@@ -4,11 +4,11 @@
   "manifest_version": 2,
   "description": "Quickly jump between open tabs across all windows!",
   "icons": {
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
+    "48": "assets/tab-icon48.png",
+    "128": "assets/tab-icon128.png"
   },
   "browser_action": {
-    "default_icon": "assets/icon48.png",
+    "default_icon": "assets/tab-icon19.png",
     "default_popup": "popup.html",
     "default_title": "SwitchTab"
   },
