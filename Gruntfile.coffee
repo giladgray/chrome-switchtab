@@ -6,6 +6,7 @@
 # use this if you want to recursively match all subfolders:
 # 'test/spec/**/*.js'
 module.exports = (grunt) ->
+  pkg = grunt.file.readJSON('package.json')
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
@@ -24,7 +25,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "src"
           src: "*.coffee"
-          dest: "dist"
+          dest: "dist/scripts"
           ext: ".js"
         ]
 
@@ -42,13 +43,19 @@ module.exports = (grunt) ->
         options:
           style: 'compressed'
         files:
-          'dist/style.css': 'src/style.scss'
+          'dist/styles/style.css': 'src/style.scss'
 
     copy:
       dist:
         expand: true
         flatten: true
-        src:  ['.tmp/hotkey.js', 'bower_components/jquery/jquery.min.js']
+        src:  ['bower_components/jquery/jquery.min.js']
+        dest: 'dist/scripts'
+
+    imagemin:
+      dist:
+        expand: true
+        src: ['assets/*.png']
         dest: 'dist/'
 
     mocha:
@@ -57,7 +64,19 @@ module.exports = (grunt) ->
           run: true
           urls: ["http://localhost:<%= connect.options.port %>/index.html"]
 
-  grunt.registerTask "build", ["clean:dist", "sass", "coffee:dist", "copy"]
+  grunt.registerTask "template", "process template", (filepath) ->
+    grunt.file.write "dist/#{filepath}",
+      grunt.template.process grunt.file.read('_' + filepath), data: pkg
+
+  grunt.registerTask "build", [
+    "clean:dist",
+    "sass",
+    "coffee:dist",
+    "copy",
+    "template:manifest.json",
+    "template:popup.html",
+    "imagemin"
+  ]
   grunt.registerTask "test", ["build", "mocha"]
 
   grunt.registerTask "default", ["build"]
