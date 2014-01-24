@@ -11,13 +11,14 @@ But if you want to go crazy, you can build it yourself from the source using [No
 
 1. In a terminal window:
   1. `git clone https://github.com/giladgray/chrome-switchtab.git` to download this repository to your machine
+  2. `cd chrome-switchtab`
   2. `npm install && bower install` to install dependencies
-  3. `grunt build` to compile the source code
+  3. `grunt build` to compile the source code into the `dist/` folder
 2. In Chrome: 
   1. Navigate to `Menu > Tools > Extensions`
   2. Check `Developer Mode` in the upper right corner
   3. Click `Load unpacked extension...` button
-  4. Select the `chrome-switchtab` repository folder you just cloned
+  4. Select the `dist/` folder inside the source repository
 3. Profit
 
 ## Development
