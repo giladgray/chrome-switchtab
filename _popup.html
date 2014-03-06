@@ -10,16 +10,21 @@
 	</head>
 	<body>
 		<div id="switchtab">
-			<div id="filter">
-				<div class="table-row">
-					<div class="fixed prompt">filter:&nbsp;</div>
-					<div class="variable">
-						<input type="text" id="search" placeholder="tab name or url" autofocus>
-					</div>
-					<span class="label" id="count"></span>
-				</div>
+			<div id="filter" class="row">
+				<span class="icon">
+					<svg class="favicon">
+						<g transform="scale(.011251758) translate(1422, 1408) rotate(180)">
+							<path class="filter" d="m 1403,1241 q 17,-41 -14,-70 L 896,678 V -64 q 0,-42 -39,-59 -13,-5 -25,-5 -27,0 -45,19 L 531,147 q -19,19 -19,45 V 678 L 19,1171 q -31,29 -14,70 17,39 59,39 h 1280 q 42,0 59,-39 z"></path>
+						</g>
+					</svg>
+				</span>
+				<span class="details">
+					<input type="text" id="search" placeholder="filter by tab name or url" autofocus>
+				</span>
+				<span class="label" id="count"></span>
 			</div>
 			<div id="tabs"></div>
+			<footer></footer>
 		</div>
 	</body>
 </html>

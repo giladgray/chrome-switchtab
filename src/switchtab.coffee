@@ -41,7 +41,7 @@ closeTab = (event) ->
 template = (tab) ->
   """
   <a class='tab' href='#{tab.windowId}##{tab.id}' data-window='#{tab.windowId}' data-tab='#{tab.id}'>
-    <img class='favicon' src='#{tab.favIconUrl}'>
+    <span class='icon'><img class='favicon' src='#{tab.favIconUrl}'></span>
     <span class='details'>
       <div class='title'>#{tab.title}</div>
       <div class='url title'>#{tab.url}</div>
@@ -97,15 +97,15 @@ chrome.tabs.query {}, (result) ->
     $window.append template tab
   # tab and window counts
   tabCount = $('.tab').size()
-  $tabs.append $('<div>').addClass('footer')
-    .text("#{tabCount} tab#{if tabCount > 0 then 's' else ''} across #{$('.window').size()} windows")
+  # $('footer')
+  #   .text("#{tabCount} tab#{if tabCount > 0 then 's' else ''} total across #{$('.window').size()} windows")
 
   # add borders when top/bottom of tabs list aren't visible
   $tabs.scroll ->
     if @scrollTop > 5 then $tabs.addClass('scroll-top')
     else $tabs.removeClass('scroll-top')
 
-    if @scrollHeight - @scrollTop - @clientHeight > 30
+    if @scrollHeight - @scrollTop - @clientHeight > 5
       $tabs.addClass('scroll-bottom')
     else $tabs.removeClass('scroll-bottom')
 
